@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "PSKc3BANBeY=",
+  "success": true,
+  "projectFilePath": "/Users/sid/develop/todolist/backend/Todo.API/Todo.API.csproj",
+  "expectedPackageFiles": [
+    "/Users/sid/.nuget/packages/microsoft.aspnetcore.openapi/10.0.2/microsoft.aspnetcore.openapi.10.0.2.nupkg.sha512",
+    "/Users/sid/.nuget/packages/microsoft.openapi/2.0.0/microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
