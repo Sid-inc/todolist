@@ -36,6 +36,43 @@
             "related": ".pdb;.xml"
           }
         }
+      },
+      "Todo.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "Todo.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Todo.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Todo.Application.dll": {}
+        }
+      },
+      "Todo.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "compile": {
+          "bin/placeholder/Todo.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Todo.Domain.dll": {}
+        }
+      },
+      "Todo.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "Todo.Application": "1.0.0",
+          "Todo.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Todo.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Todo.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -75,11 +112,28 @@
         "microsoft.openapi.2.0.0.nupkg.sha512",
         "microsoft.openapi.nuspec"
       ]
+    },
+    "Todo.Application/1.0.0": {
+      "type": "project",
+      "path": "../Todo.Application/Todo.Application.csproj",
+      "msbuildProject": "../Todo.Application/Todo.Application.csproj"
+    },
+    "Todo.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Todo.Domain/Todo.Domain.csproj",
+      "msbuildProject": "../Todo.Domain/Todo.Domain.csproj"
+    },
+    "Todo.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../Todo.Infrastructure/Todo.Infrastructure.csproj",
+      "msbuildProject": "../Todo.Infrastructure/Todo.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
-      "Microsoft.AspNetCore.OpenApi >= 10.0.2"
+      "Microsoft.AspNetCore.OpenApi >= 10.0.2",
+      "Todo.Application >= 1.0.0",
+      "Todo.Infrastructure >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -106,7 +160,14 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/sid/develop/todolist/backend/Todo.Application/Todo.Application.csproj": {
+              "projectPath": "/Users/sid/develop/todolist/backend/Todo.Application/Todo.Application.csproj"
+            },
+            "/Users/sid/develop/todolist/backend/Todo.Infrastructure/Todo.Infrastructure.csproj": {
+              "projectPath": "/Users/sid/develop/todolist/backend/Todo.Infrastructure/Todo.Infrastructure.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

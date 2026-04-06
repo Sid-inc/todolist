@@ -1,0 +1,53 @@
+namespace Todo.Domain.Models;
+
+public class TodoItem
+{
+    public Guid Id { get; private set; }
+    public string Title { get; private set; } = string.Empty;
+    public string Description { get; private set; } = string.Empty;
+    public bool IsCompleted { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+    public DateTime? UpdatedAt { get; private set; }
+
+    public TodoItem(string title, string? description = null)
+    {
+        Id = Guid.NewGuid();
+        CreatedAt = DateTime.UtcNow;
+        
+        SetTitle(title);
+        SetDescription(description);
+    }
+
+    public void Update(string title, string? description = null)
+    {
+        SetTitle(title);
+        SetDescription(description);
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void ToggleCompleted()
+    {
+        IsCompleted = !IsCompleted;
+        UpdatedAt = DateTime.UtcNow;
+    }
+    
+    void SetTitle(string title)
+    {
+        if(string.IsNullOrWhiteSpace(title))
+            throw new ArgumentException("Empty title", nameof(title));
+        
+        if(title.Length > 120)
+            throw new ArgumentException("Too long title", nameof(title));
+        
+        Title = title;
+    }
+    
+    void SetDescription(string? description)
+    {
+        if(description is not null && description.Length > 2000)
+            throw new ArgumentException("Too long description", nameof(description));
+        
+        Description = Description;
+    }
+    
+}
