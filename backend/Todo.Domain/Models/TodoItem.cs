@@ -9,6 +9,9 @@ public class TodoItem
     public DateTime CreatedAt { get; private set; }
     public DateTime? UpdatedAt { get; private set; }
 
+    public const int TitleMaxLength = 120;
+    public const int DescriptionMaxLength = 2000;
+
     public TodoItem(string title, string? description = null)
     {
         Id = Guid.NewGuid();
@@ -36,7 +39,7 @@ public class TodoItem
         if(string.IsNullOrWhiteSpace(title))
             throw new ArgumentException("Empty title", nameof(title));
         
-        if(title.Length > 120)
+        if(title.Length > TitleMaxLength)
             throw new ArgumentException("Too long title", nameof(title));
         
         Title = title;
@@ -44,7 +47,7 @@ public class TodoItem
     
     void SetDescription(string? description)
     {
-        if(description is not null && description.Length > 2000)
+        if(description is not null && description.Length > DescriptionMaxLength)
             throw new ArgumentException("Too long description", nameof(description));
         
         Description = Description;
