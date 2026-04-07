@@ -127,3 +127,6 @@
 /Users/sid/develop/todolist/backend/Todo.API/bin/Debug/net10.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 /Users/sid/develop/todolist/backend/Todo.API/bin/Debug/net10.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 /Users/sid/develop/todolist/backend/Todo.API/bin/Debug/net10.0/Microsoft.VisualStudio.SolutionPersistence.dll
+/Users/sid/develop/todolist/backend/Todo.API/bin/Debug/net10.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/sid/develop/todolist/backend/Todo.API/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/sid/develop/todolist/backend/Todo.API/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerUI.dll
