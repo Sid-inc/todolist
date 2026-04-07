@@ -1,72 +1,44 @@
-node_modules/
-.npm/
-.yarn/
-.pnpm-store/
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-dist/
-out/
-tmp/
-temp/
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
 
-.angular/
-.ngtools/
-*.ngfactory.ts
-*.ngsummary.json
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
 
-coverage/
-coverage_*/
-*.lcov
-*.lcov.info
-
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-lerna-debug.log*
-
-.env
-.env.local
-.env.production
-.env.development
-.env.*.local
-
-.vscode/
+# IDEs and editors
 .idea/
-*.swp
-*.swo
-*~
-.DS_Store
-Thumbs.db
-*.sublime-*
 .project
 .classpath
+.c9/
+*.launch
 .settings/
+*.sublime-workspace
 
-*.js.map
-*.d.ts.map
-*.metadata.json
-*.scss.d.ts
-*.css.d.ts
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/mcp.json
+.history/*
 
-.angular-cli.json
-angular-cli.json
-.angular.json.local
-angular.json.local
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+__screenshots__/
 
-.selenium/
-chrome-user-data/
-
-.vs/
-.wsuo
-*.user
-*.userosscache
-
-Desktop.ini
-$RECYCLE.BIN/
-
-.AppleDouble
-.LSOverride
-._*
-
-.directory
+# System files
+.DS_Store
+Thumbs.db
