@@ -8,7 +8,8 @@ import { MatIcon } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
 import { TodoStoreService } from '../../services/todo-store.service';
-import { CreateTodoRequest } from '../../../core/models/todo-item.model';
+import { CreateTodoRequest, UpdateTodRequest } from '../../../core/models/todo-item.model';
+import { TodoItemComponent } from '../todo-item/todo-item';
 
 @Component({
   selector: 'app-todo-list',
@@ -20,8 +21,9 @@ import { CreateTodoRequest } from '../../../core/models/todo-item.model';
     MatButtonModule,
     MatIcon,
     MatProgressSpinnerModule,
-    MatListModule
-],
+    MatListModule,
+    TodoItemComponent,
+  ],
   template: `<div class="todo-container">
     <mat-card>
       <mat-card-title>Todo list</mat-card-title>
@@ -30,8 +32,7 @@ import { CreateTodoRequest } from '../../../core/models/todo-item.model';
           <mat-form-field>
             <mat-label>Todo name</mat-label>
             <input matInput formControlName="title" required />
-            @if (todoForm.get('title')?.invalid)
-            {
+            @if (todoForm.get('title')?.invalid) {
               <mat-error>Name is required</mat-error>
             }
           </mat-form-field>
@@ -65,7 +66,10 @@ import { CreateTodoRequest } from '../../../core/models/todo-item.model';
         @if (!loading() && !error()) {
           <mat-list class="todo-list">
             @for (todo of todos(); track todo.id) {
-              {{ todo.title }}
+              <app-todo-item
+                [todo]="todo"
+                (update)="onUpdate($event)"
+                (delete)="onDelete($event)"/>
             } @empty {
               <mat-list-item>Empty</mat-list-item>
             }
@@ -103,10 +107,17 @@ export class TodoList implements OnInit {
     }
     this.onCreate(request);
     this.todoForm.reset();
-    this.todoForm.markAsPristine();
   }
 
-  onCreate(request: CreateTodoRequest) {
+  onCreate(request: CreateTodoRequest): void  {
     this.todoStore.addTodo(request);
+  }
+
+  onUpdate(event: { id:string; request: UpdateTodRequest }): void  {
+    this.todoStore.updateTodo(event.id, event.request);
+  }
+
+  onDelete(id:string): void  {
+    this.todoStore.deleteTodo(id);
   }
 }
