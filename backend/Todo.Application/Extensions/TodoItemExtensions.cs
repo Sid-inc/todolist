@@ -17,9 +17,13 @@ public static class TodoItemExtensions
     
     public static void Update(this TodoItem item, UpdateTodoRequest request)
     {
-        item.Update(request.Title, request.Description);
+        if (request.Title is not null) 
+            item.UpdateTitle(request.Title);
         
-        if (request.IsCompleted != item.IsCompleted)
+        if (request.Description is not null) 
+            item.UpdateDescription(request.Description);
+        
+        if (request.IsCompleted.HasValue && request.IsCompleted != item.IsCompleted)
             item.ToggleCompleted();
     }
 }

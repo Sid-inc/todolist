@@ -21,10 +21,15 @@ public class TodoItem
         SetDescription(description);
     }
 
-    public void Update(string title, string? description = null)
+    public void UpdateTitle(string title)
     {
         SetTitle(title);
-        SetDescription(description);
+        UpdatedAt = DateTime.UtcNow;
+    }
+    
+    public void UpdateDescription(string title)
+    {
+        SetDescription(title);
         UpdatedAt = DateTime.UtcNow;
     }
 
