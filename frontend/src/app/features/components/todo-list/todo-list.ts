@@ -26,7 +26,7 @@ import { TodoItemComponent } from '../todo-item/todo-item';
   ],
   template: `<div class="todo-container">
     <mat-card>
-      <mat-card-title>Todo list</mat-card-title>
+      <mat-card-title class="todo-container__title">Todo list</mat-card-title>
       <mat-card-content>
         <form [formGroup]="todoForm" (ngSubmit)="onSubmit()" class="todo-form">
           <mat-form-field>
@@ -42,7 +42,7 @@ import { TodoItemComponent } from '../todo-item/todo-item';
             <input matInput formControlName="description" />
           </mat-form-field>
 
-          <button mat-rised-button color="primary" type="submit" [disabled]="todoForm.invalid">
+          <button mat-rised-button color="primary" type="submit" class="todo-form__submit" [disabled]="todoForm.invalid">
             <mat-icon>add</mat-icon>
             Add
           </button>
@@ -67,6 +67,7 @@ import { TodoItemComponent } from '../todo-item/todo-item';
           <mat-list class="todo-list">
             @for (todo of todos(); track todo.id) {
               <app-todo-item
+                class="todo-list__item"
                 [todo]="todo"
                 (update)="onUpdate($event)"
                 (delete)="onDelete($event)"/>

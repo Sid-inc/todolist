@@ -1,3 +1,8 @@
 :host {
   display: block;
 }
+
+.todo-item__actions {
+  margin-left: auto;
+  width: fit-content;
+}
