@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterOutlet } from '@angular/router';
+import { TodoList } from "./features/components/todo-list/todo-list";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatIconModule],
-  templateUrl: './app.html',
+  imports: [MatIconModule, TodoList],
+  template: '<app-todo-list/>',
   styleUrl: './app.scss'
 })
 export class App {
