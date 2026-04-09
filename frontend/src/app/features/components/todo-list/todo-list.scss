@@ -9,19 +9,6 @@
   padding: 16px;
 }
 
-.todo-form {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.todo-form__submit {
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  justify-self: center;
-}
-
 .todo-list__item + .todo-list__item {
   margin-top: 16px;
 }

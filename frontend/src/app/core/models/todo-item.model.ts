@@ -14,6 +14,6 @@ export type CreateTodoRequest = {
 
 export type UpdateTodRequest = {
   title?: string;
-  description?: string;
+  description?: string | null;
   isCompleted?: boolean;
 }

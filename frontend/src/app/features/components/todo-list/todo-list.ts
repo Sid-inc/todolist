@@ -1,52 +1,30 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatIcon } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
 import { TodoStoreService } from '../../services/todo-store.service';
-import { CreateTodoRequest, UpdateTodRequest } from '../../../core/models/todo-item.model';
+import { CreateTodoRequest, TodoItem, UpdateTodRequest } from '../../../core/models/todo-item.model';
 import { TodoItemComponent } from '../todo-item/todo-item';
+import { TodoForm } from '../todo-form/todo-form';
 
 @Component({
   selector: 'app-todo-list',
   imports: [
-    ReactiveFormsModule,
     MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
     MatIcon,
     MatProgressSpinnerModule,
     MatListModule,
     TodoItemComponent,
+    TodoForm
   ],
   template: `<div class="todo-container">
     <mat-card>
       <mat-card-title class="todo-container__title">Todo list</mat-card-title>
       <mat-card-content>
-        <form [formGroup]="todoForm" (ngSubmit)="onSubmit()" class="todo-form">
-          <mat-form-field>
-            <mat-label>Todo name</mat-label>
-            <input matInput formControlName="title" required />
-            @if (todoForm.get('title')?.invalid) {
-              <mat-error>Name is required</mat-error>
-            }
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Todo text</mat-label>
-            <input matInput formControlName="description" />
-          </mat-form-field>
-
-          <button mat-rised-button color="primary" type="submit" class="todo-form__submit" [disabled]="todoForm.invalid">
-            <mat-icon>add</mat-icon>
-            Add
-          </button>
-        </form>
+        <app-todo-form (submitForm)="onSubmit($event)"/>
 
         @if (loading()) {
           <div>
@@ -69,9 +47,9 @@ import { TodoItemComponent } from '../todo-item/todo-item';
               <app-todo-item
                 class="todo-list__item"
                 [todo]="todo"
-                (update)="onUpdate($event)"
                 (delete)="onDelete($event)"/>
-            } @empty {
+                <!-- (update)="onUpdate($event)" -->
+              } @empty {
               <mat-list-item>Empty</mat-list-item>
             }
           </mat-list>
@@ -83,39 +61,37 @@ import { TodoItemComponent } from '../todo-item/todo-item';
 })
 export class TodoList implements OnInit {
   private todoStore = inject(TodoStoreService);
-  private formBuilder = inject(FormBuilder);
 
   todos = this.todoStore.todos;
   loading = this.todoStore.loading;
   error = this.todoStore.error;
 
-  todoForm: FormGroup = this.formBuilder.group({
-    title: ['', Validators.required],
-    description: ['']
-  });
-
   ngOnInit(): void {
     this.todoStore.reloadTodos();
   }
 
-  onSubmit(): void {
-    if(!this.todoForm.valid)
-      return;
-
-    const request: CreateTodoRequest = {
-      title: this.todoForm.value.title,
-      description: this.todoForm.value.description || null
+  onSubmit(item: TodoItem): void {
+    if(item.id !== "") {
+      const updateRequest: UpdateTodRequest = {
+        title: item.title,
+        description: item.description || undefined
+      }
+      this.onUpdate(item.id, updateRequest);
+    } else {
+      const createRequest: CreateTodoRequest = {
+        title: item.title,
+        description: item.description || null
+      }
+      this.onCreate(createRequest);
     }
-    this.onCreate(request);
-    this.todoForm.reset();
   }
 
   onCreate(request: CreateTodoRequest): void  {
     this.todoStore.addTodo(request);
   }
 
-  onUpdate(event: { id:string; request: UpdateTodRequest }): void  {
-    this.todoStore.updateTodo(event.id, event.request);
+  onUpdate(id: string, request: UpdateTodRequest): void  {
+    this.todoStore.updateTodo(id, request);
   }
 
   onDelete(id:string): void  {

@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+.todo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.todo-form__submit {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-self: center;
+}
