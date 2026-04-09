@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, signal, OnInit } from '@angular/core';
 import { TodoItem } from '../../../core/models/todo-item.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,13 +24,19 @@ import { MatIcon } from '@angular/material/icon';
       </mat-form-field>
 
       <button mat-rised-button color="primary" type="submit" class="todo-form__submit" [disabled]="todoForm.invalid">
-        <mat-icon>add</mat-icon>
-        Add
+        @if (!this.todo()?.id)
+          {
+            <mat-icon>add</mat-icon>
+            Add
+          } @else {
+            <mat-icon>check</mat-icon>
+            Apply
+          }
       </button>
     </form>`,
   styleUrl: './todo-form.css',
 })
-export class TodoForm {
+export class TodoForm implements OnInit {
   private formBuilder = inject(FormBuilder);
 
   todo = input<TodoItem | null>(null);
@@ -41,12 +47,21 @@ export class TodoForm {
     description: ['']
   });
 
-  onSubmit() {
+  ngOnInit(): void {
+    if (this.todo()?.id) {
+      this.todoForm.setValue({
+        title: this.todo()?.title,
+        description: this.todo()?.description
+      });
+    }
+  }
+
+  onSubmit(): void {
     if(!this.todoForm.valid)
           return;
 
     const todoModel: TodoItem = {
-      id: this.todo()?.id ?? "",
+      id: this.todo()?.id ?? '',
       title: this.todoForm.value.title,
       description: this.todoForm.value.description || null,
       isCompleted: this.todo()?.isCompleted ?? false,

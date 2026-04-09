@@ -43,12 +43,12 @@ import { TodoForm } from '../todo-form/todo-form';
 
         @if (!loading() && !error()) {
           <mat-list class="todo-list">
-            @for (todo of todos(); track todo.id) {
+            @for (todo of todos().sort(sortFunc); track todo.id) {
               <app-todo-item
                 class="todo-list__item"
                 [todo]="todo"
+                (update)="onUpdate($event)"
                 (delete)="onDelete($event)"/>
-                <!-- (update)="onUpdate($event)" -->
               } @empty {
               <mat-list-item>Empty</mat-list-item>
             }
@@ -66,6 +66,12 @@ export class TodoList implements OnInit {
   loading = this.todoStore.loading;
   error = this.todoStore.error;
 
+  sortFunc = (a: TodoItem, b: TodoItem) => {
+    if (b.createdAt < a.createdAt) return -1;
+    if (b.createdAt > a.createdAt) return 1;
+    return 0;
+  }
+
   ngOnInit(): void {
     this.todoStore.reloadTodos();
   }
@@ -76,7 +82,11 @@ export class TodoList implements OnInit {
         title: item.title,
         description: item.description || undefined
       }
-      this.onUpdate(item.id, updateRequest);
+      const updateEvent: {id: string, request: UpdateTodRequest} = {
+        id: item.id,
+        request: updateRequest
+      };
+      this.onUpdate(updateEvent);
     } else {
       const createRequest: CreateTodoRequest = {
         title: item.title,
@@ -90,8 +100,8 @@ export class TodoList implements OnInit {
     this.todoStore.addTodo(request);
   }
 
-  onUpdate(id: string, request: UpdateTodRequest): void  {
-    this.todoStore.updateTodo(id, request);
+  onUpdate(event: {id: string, request: UpdateTodRequest}): void  {
+    this.todoStore.updateTodo(event.id, event.request);
   }
 
   onDelete(id:string): void  {
